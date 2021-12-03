@@ -1,8 +1,8 @@
 import pyttsx3
 import pyaudio
-#import pywhatkit
+import pywhatkit
 import pyjokes
-#import wikipedia
+import wikipedia
 import datetime
 import webbrowser
 import speech_recognition as sr
