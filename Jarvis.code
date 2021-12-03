@@ -1,0 +1,64 @@
+import pyttsx3
+import pyaudio
+#import pywhatkit
+import pyjokes
+#import wikipedia
+import datetime
+import webbrowser
+import speech_recognition as sr
+listener = sr.Recognizer()
+engine=pyttsx3.init("sapi5")
+voices=engine.getProperty("voices")
+engine.setProperty("voice",voices[1].id)
+engine.say("I am your Jarvis \n Waiting to serve you Praveen")
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+def take_command():
+
+ try:
+    with sr.Microphone() as source:
+        print("Jarvis is listening...")
+        listener.pause_threshold=1
+        listener.adjust_for_ambient_noise(source, duration=1)
+        voice=listener.listen(source)
+        command=listener.recognize_google(voice)
+        command=command.lower()
+        print(command)
+        talk(command)
+ except:
+    talk("Please say it again")
+ return command 
+def run():
+    command = take_command() 
+    if "play" in command:
+        command=command.replace("jarvis"," ")
+        pywhatkit.playonyt(command)
+    elif "depressed" in command:
+        talk("don't worry nothing is permanent")
+    elif "are you single" in command:
+        talk("i am in relationship with internet")
+    elif "i love you" in command:
+        talk("i too love you")
+    elif "joke" in command:
+        talk(pyjokes.get_joke())  
+        print(pyjokes.get_joke())  
+    elif "time" in command:
+        time=datetime.datetime.now().strftime("%I:%M %p")
+        print("current time is "+time)   
+        talk("current time is "+time) 
+    elif "who is" in command:
+        command=command.replace("who is"," ")
+        info=wikipedia.summary(command,3)
+        print(command)
+        talk(command)
+    elif "open twitter"  in command:
+        webbrowser.open("twitter.com")
+    elif "open instagram"  in command:
+        webbrowser.open("instagram.com")
+
+    elif "open youtube"  in command:
+         webbrowser.open("youtube.com")  
+    elif "open google"  in command:
+        webbrowser.open("google.com")      
+run()
